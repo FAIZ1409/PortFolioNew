@@ -433,12 +433,52 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
         }
 
+        /* Top Bar with Social Icons */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            z-index: 1001;
+            background: rgba(26, 86, 219, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dark-mode .top-bar {
+            background: rgba(10, 25, 47, 0.1);
+        }
+
+        .social-icons-top {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-icon:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
         /* Theme Toggle */
         .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
             background: var(--card-light);
             border: 2px solid var(--primary);
             border-radius: 50%;
@@ -454,6 +494,40 @@
 
         .theme-toggle:hover {
             transform: rotate(30deg);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1002;
+        }
+
+        .menu-line {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-toggle.active .menu-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .mobile-menu-toggle.active .menu-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active .menu-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
         }
 
         /* Navigation */
@@ -495,6 +569,137 @@
 
         .nav-button:hover::before {
             width: 100%;
+        }
+
+        /* Mobile Navigation Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100%;
+            background: var(--card-light);
+            box-shadow: -5px 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+        }
+
+        .dark-mode .mobile-nav {
+            background: var(--card-dark);
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .mobile-nav-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-header h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .mobile-nav-close {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-close:hover {
+            background: rgba(26, 86, 219, 0.1);
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .mobile-nav-link {
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+        }
+
+        .dark-mode .mobile-nav-link {
+            color: var(--text-light);
+        }
+
+        .mobile-nav-link:hover {
+            background: rgba(26, 86, 219, 0.1);
+            transform: translateX(5px);
+        }
+
+        .mobile-nav-link i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .mobile-nav-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .mobile-nav-social {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .mobile-nav-social .social-icon {
+            background: rgba(26, 86, 219, 0.1);
+            border: 1px solid rgba(26, 86, 219, 0.2);
         }
 
         /* Main Content */
@@ -1334,22 +1539,34 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .top-bar {
+                padding: 1rem;
+            }
+
+            .social-icons-top {
+                gap: 0.5rem;
+            }
+
+            .social-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+
             .header h1 {
                 font-size: 2.8rem;
             }
             
             .header p {
                 font-size: 1.2rem;
-            }
-            
-            .nav-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .nav-button {
-                width: 80%;
-                text-align: center;
             }
             
             .main-content {
@@ -1387,6 +1604,25 @@
             }
         }
 
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .profile-img {
+                width: 180px;
+                height: 180px;
+            }
+
+            .mobile-nav {
+                width: 100%;
+            }
+        }
+
         @media (min-width: 769px) and (max-width: 1024px) {
             .contact-details {
                 grid-template-columns: repeat(2, 1fr);
@@ -1399,9 +1635,83 @@
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-    <!-- Theme Toggle -->
-    <div class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
+    <!-- Top Bar with Social Icons and Mobile Menu -->
+    <div class="top-bar">
+        <div class="social-icons-top">
+            <a href="https://www.linkedin.com/in/mohammed-faiz-a82623290/" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/FAIZ1409" target="_blank" class="social-icon">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+                <span class="menu-line"></span>
+            </button>
+            
+            <!-- Theme Toggle -->
+            <div class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+
+    <!-- Mobile Navigation Panel -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <h3>Navigation</h3>
+            <button class="mobile-nav-close" id="mobileNavClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-nav-links">
+            <a href="#about" class="mobile-nav-link">
+                <i class="fas fa-user"></i>
+                <span>About</span>
+            </a>
+            <a href="#education" class="mobile-nav-link">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Education</span>
+            </a>
+            <a href="#skills" class="mobile-nav-link">
+                <i class="fas fa-code"></i>
+                <span>Skills</span>
+            </a>
+            <a href="#certifications" class="mobile-nav-link">
+                <i class="fas fa-certificate"></i>
+                <span>Certifications</span>
+            </a>
+            <a href="#projects" class="mobile-nav-link">
+                <i class="fas fa-project-diagram"></i>
+                <span>Projects</span>
+            </a>
+            <a href="#achievements" class="mobile-nav-link">
+                <i class="fas fa-trophy"></i>
+                <span>Achievements</span>
+            </a>
+            <a href="#contact" class="mobile-nav-link">
+                <i class="fas fa-address-book"></i>
+                <span>Contacts</span>
+            </a>
+        </div>
+        
+        <div class="mobile-nav-social">
+            <a href="https://www.linkedin.com/in/mohammed-faiz-a82623290/" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/FAIZ1409" target="_blank" class="social-icon">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
     </div>
 
     <!-- AI Chatbot -->
@@ -1768,6 +2078,35 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
+        // Mobile Navigation Functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        function openMobileNav() {
+            mobileMenuToggle.classList.add('active');
+            mobileNavOverlay.classList.add('active');
+            mobileNav.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileNav() {
+            mobileMenuToggle.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuToggle.addEventListener('click', openMobileNav);
+        mobileNavClose.addEventListener('click', closeMobileNav);
+        mobileNavOverlay.addEventListener('click', closeMobileNav);
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMobileNav);
+        });
+
         // Create dynamic particles
         function createParticles() {
             const particlesContainer = document.getElementById('particlesContainer');
@@ -1998,7 +2337,6 @@
                         { text: "Projects", message: "What projects" },
                         { text: "Skills", message: "Show me skills" }
                     ]);
-                    addResumeSuggestion();
                 }
                 else if (lowerMessage.includes('contact') || lowerMessage.includes('email') || lowerMessage.includes('phone') || lowerMessage.includes('linkedin') || lowerMessage.includes('github')) {
                     const response = chatbotKnowledge.contact.join('\n\n');
@@ -2189,7 +2527,7 @@
         });
 
         // Smooth scrolling for navigation links
-        document.querySelectorAll('.nav-button').forEach(button => {
+        document.querySelectorAll('.nav-button, .mobile-nav-link').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
