@@ -2465,71 +2465,69 @@
         });
 
         // Email form handling with Firebase - Fixed with timeout
-        document.getElementById('emailForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const submitBtn = document.getElementById('submitBtn');
-            const loadingSpinner = document.getElementById('loadingSpinner');
-            const submitText = document.getElementById('submitText');
-            const formMessage = document.getElementById('formMessage');
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            loadingSpinner.style.display = 'inline-block';
-            submitText.textContent = 'Sending...';
-            formMessage.style.display = 'none';
-            
-            // Get form data
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            const timestamp = new Date();
-            
-            try {
-                // Add timeout to prevent hanging
-                const timeoutPromise = new Promise((_, reject) => 
-                    setTimeout(() => reject(new Error('Request timeout')), 10000)
-                );
-                
-                // Save to Firebase with timeout
-                const savePromise = db.collection('messages').add({
-                    name: name,
-                    email: email,
-                    subject: subject,
-                    message: message,
-                    timestamp: timestamp,
-                    status: 'new'
-                });
-                
-                await Promise.race([savePromise, timeoutPromise]);
-                
-                // Show success message
-                formMessage.textContent = `Thank you, ${name}! Your message has been sent successfully. I will get back to you soon.`;
-                formMessage.className = 'form-message success';
-                formMessage.style.display = 'block';
-                
-                // Reset form
-                document.getElementById('emailForm').reset();
-                
-            } catch (error) {
-                console.error('Error saving message:', error);
-                
-                // Show error message
-                if (error.message === 'Request timeout') {
-                    formMessage.textContent = 'Request timed out. Please check your connection and try again.';
-                } else {
-                    formMessage.textContent = 'Sorry, there was an error sending your message. Please try again later.';
-                }
-                formMessage.className = 'form-message error';
-                formMessage.style.display = 'block';
-            } finally {
-                // Reset button state
-                submitBtn.disabled = false;
-                loadingSpinner.style.display = 'none';
-                submitText.textContent = 'Send Message';
-            }
-        });
+        document.getElementById('emailForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const submitBtn = document.getElementById('submitBtn');
+  const loadingSpinner = document.getElementById('loadingSpinner');
+  const submitText = document.getElementById('submitText');
+  const formMessage = document.getElementById('formMessage');
+
+  submitBtn.disabled = true;
+  loadingSpinner.style.display = 'inline-block';
+  submitText.textContent = 'Sending...';
+  formMessage.style.display = 'none';
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value;
+  const timestamp = new Date();
+
+  try {
+    /* ✅ 1. SEND EMAIL */
+    await emailjs.send(
+      "service_nrzdc46",          // your service ID
+      "template_730zk27",         // your template ID
+      {
+        from_name: name,
+        from_email: email,
+        subject: subject,
+        message: message
+      }
+    );
+
+    /* ✅ 2. SAVE TO FIREBASE (optional but good) */
+    await db.collection('messages').add({
+      name,
+      email,
+      subject,
+      message,
+      timestamp,
+      status: 'new'
+    });
+
+    formMessage.textContent = `Thank you, ${name}! Your message has been sent successfully.`;
+    formMessage.className = 'form-message success';
+    formMessage.style.display = 'block';
+
+    document.getElementById('emailForm').reset();
+
+  } catch (error) {
+    console.error(error);
+
+    formMessage.textContent =
+      'Sorry, there was an error sending your message. Please try again later.';
+    formMessage.className = 'form-message error';
+    formMessage.style.display = 'block';
+
+  } finally {
+    submitBtn.disabled = false;
+    loadingSpinner.style.display = 'none';
+    submitText.textContent = 'Send Message';
+  }
+});
+
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('.nav-button, .mobile-nav-link').forEach(button => {
