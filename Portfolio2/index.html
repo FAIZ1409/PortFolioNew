@@ -2465,6 +2465,7 @@
         });
 
         // Email form handling with Firebase - Fixed with timeout
+        console.log("FORM SUBMITTED");
         document.getElementById('emailForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -2496,6 +2497,8 @@
         message: message
       }
     );
+      console.log("SENDING EMAIL VIA EMAILJS");
+
 
     /* ✅ 2. SAVE TO FIREBASE (optional but good) */
     await db.collection('messages').add({
@@ -2515,7 +2518,7 @@
 
   } catch (error) {
     console.error(error);
-
+    console.error("FULL ERROR:", error);
     formMessage.textContent =
       'Sorry, there was an error sending your message. Please try again later.';
     formMessage.className = 'form-message error';
